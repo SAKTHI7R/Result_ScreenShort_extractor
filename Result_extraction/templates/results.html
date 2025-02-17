@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Results</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        padding: 20px;
+        background-color: #f4f4f9;
+      }
+      .result-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .result-card {
+        background: white;
+        padding: 15px;
+        margin: 15px;
+        border-radius: 10px;
+        box-shadow: 3px 3px 12px rgba(0, 0, 0, 0.1);
+        width: 270px;
+        text-align: center;
+      }
+      .result-card img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+        margin-top: 10px;
+        cursor: pointer;
+      }
+      /* Modal Styles */
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        overflow: auto;
+        padding-top: 50px;
+      }
+      .modal-content {
+        margin: auto;
+        display: block;
+        max-width: 90%;
+        max-height: 90%;
+        border-radius: 10px;
+      }
+      .close {
+        position: absolute;
+        top: 10px;
+        right: 20px;
+        color: white;
+        font-size: 30px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Results</h2>
+    <div class="result-container">
+      {% if results %} {% for result in results %}
+      <div class="result-card">
+        <h3>Register No: {{ result.register_number }}</h3>
+        <img
+          src="{{ url_for('static', filename='screenshots/result_' ~ result.register_number ~ '.png') }}"
+          alt="Screenshot"
+          onclick="openModal(this.src)"
+          onerror="this.onerror=null; this.src='{{ url_for('static', filename='screenshots/placeholder.png') }}';"
+        />
+      </div>
+      {% endfor %} {% else %}
+      <p style="color: red">Failed to fetch result</p>
+      {% endif %}
+    </div>
+
+    <!-- Modal Structure -->
+    <div id="imageModal" class="modal">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <img class="modal-content" id="modalImage" />
+    </div>
+
+    <br />
+    <a href="/">Go Back</a>
+
+    <script>
+      function openModal(src) {
+        document.getElementById("imageModal").style.display = "block";
+        document.getElementById("modalImage").src = src;
+      }
+
+      function closeModal() {
+        document.getElementById("imageModal").style.display = "none";
+      }
+    </script>
+  </body>
+</html>

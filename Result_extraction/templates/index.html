@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Upload Student Data</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        padding: 20px;
+        background-color: #f4f4f9;
+      }
+
+      h2 {
+        color: #333;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: 350px;
+        margin: auto;
+      }
+
+      label {
+        width: 100%;
+        text-align: left;
+        margin-top: 10px;
+        font-weight: bold;
+        color: #444;
+      }
+
+      input,
+      button {
+        margin-top: 5px;
+        padding: 10px;
+        width: 100%;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 14px;
+      }
+
+      input:focus {
+        border-color: #007bff;
+        outline: none;
+      }
+
+      button {
+        background: #007bff;
+        color: white;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+        transition: 0.3s;
+        margin-top: 15px;
+      }
+
+      button:hover {
+        background: #0056b3;
+      }
+      .loader {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        position: relative;
+        display: none;
+        margin: 10px auto;
+      }
+
+      .loader::before,
+      .loader::after {
+        content: "  ";
+        box-sizing: border-box;
+        position: absolute;
+        inset: 0px;
+        border-radius: 50%;
+        border: 5px solid #007bff;
+        animation: prixClipFix 2s linear infinite;
+      }
+
+      .loader::after {
+        border-color: rgb(0, 8, 255);
+        animation: prixClipFix 2s linear infinite,
+          rotate 0.5s linear infinite reverse;
+        inset: 6px;
+      }
+
+      @keyframes rotate {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      @keyframes prixClipFix {
+        0% {
+          clip-path: polygon(50% 50%, 0 0, 0 0, 0 0, 0 0, 0 0);
+        }
+        25% {
+          clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 0, 100% 0, 100% 0);
+        }
+        50% {
+          clip-path: polygon(
+            50% 50%,
+            0 0,
+            100% 0,
+            100% 100%,
+            100% 100%,
+            100% 100%
+          );
+        }
+        75% {
+          clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 0 100%, 0 100%);
+        }
+        100% {
+          clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 0 100%, 0 0);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Upload Student Data</h2>
+
+    <form
+      action="/"
+      method="POST"
+      enctype="multipart/form-data"
+      onsubmit="showLoader()"
+    >
+      <label>Result Page URL:</label>
+      <input
+        type="text"
+        name="result_page_url"
+        required
+        placeholder="Enter result page URL"
+      />
+
+      <label>Submit Button ID:</label>
+      <input
+        type="text"
+        name="submit_button_id"
+        required
+        placeholder="Enter submit button ID"
+      />
+
+      <label>Upload Excel File:</label>
+      <input type="file" name="file" required />
+
+      <label>Select a Folder to Save Screenshots:</label>
+      <input
+        type="text"
+        id="folderPicker"
+        name="screenshot_folder"
+        placeholder="Paste path to save screenshots"
+      />
+
+      <button type="submit">Submit</button>
+      <div class="loader" id="loader"></div>
+    </form>
+
+    <script>
+      function showLoader() {
+        document.getElementById("loader").style.display = "block";
+      }
+    </script>
+  </body>
+</html>
